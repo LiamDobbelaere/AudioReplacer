@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.cboMicDevice = new System.Windows.Forms.ComboBox();
             this.btnRecord = new System.Windows.Forms.Button();
             this.tmrUpdateVolume = new System.Windows.Forms.Timer(this.components);
@@ -39,19 +40,21 @@
             this.chkPlayOnSelect = new System.Windows.Forms.CheckBox();
             this.btnPlay = new System.Windows.Forms.Button();
             this.btnPanic = new System.Windows.Forms.Button();
+            this.pbrWaveProgress = new wclDigaly.dyWin7Progress();
+            this.tmrUpdatePlayback = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // cboMicDevice
             // 
             this.cboMicDevice.FormattingEnabled = true;
-            this.cboMicDevice.Location = new System.Drawing.Point(13, 13);
+            this.cboMicDevice.Location = new System.Drawing.Point(12, 13);
             this.cboMicDevice.Name = "cboMicDevice";
-            this.cboMicDevice.Size = new System.Drawing.Size(259, 21);
+            this.cboMicDevice.Size = new System.Drawing.Size(260, 21);
             this.cboMicDevice.TabIndex = 0;
             // 
             // btnRecord
             // 
-            this.btnRecord.Location = new System.Drawing.Point(279, 155);
+            this.btnRecord.Location = new System.Drawing.Point(282, 207);
             this.btnRecord.Name = "btnRecord";
             this.btnRecord.Size = new System.Drawing.Size(142, 23);
             this.btnRecord.TabIndex = 1;
@@ -68,10 +71,10 @@
             // pbrMicValue
             // 
             this.pbrMicValue.BackColor = System.Drawing.Color.White;
-            this.pbrMicValue.ForeColor = System.Drawing.Color.DarkTurquoise;
-            this.pbrMicValue.Location = new System.Drawing.Point(13, 40);
+            this.pbrMicValue.ForeColor = System.Drawing.Color.DarkViolet;
+            this.pbrMicValue.Location = new System.Drawing.Point(12, 40);
             this.pbrMicValue.Name = "pbrMicValue";
-            this.pbrMicValue.Size = new System.Drawing.Size(259, 23);
+            this.pbrMicValue.Size = new System.Drawing.Size(260, 23);
             this.pbrMicValue.TabIndex = 3;
             this.pbrMicValue.Text = "dyWin7Progress1";
             this.pbrMicValue.Value = 0;
@@ -87,9 +90,9 @@
             // 
             // btnSelectInput
             // 
-            this.btnSelectInput.Location = new System.Drawing.Point(13, 97);
+            this.btnSelectInput.Location = new System.Drawing.Point(12, 97);
             this.btnSelectInput.Name = "btnSelectInput";
-            this.btnSelectInput.Size = new System.Drawing.Size(259, 23);
+            this.btnSelectInput.Size = new System.Drawing.Size(261, 23);
             this.btnSelectInput.TabIndex = 5;
             this.btnSelectInput.Text = "Select input files directory";
             this.btnSelectInput.UseVisualStyleBackColor = true;
@@ -99,14 +102,13 @@
             // 
             this.lblInputPath.Location = new System.Drawing.Point(13, 319);
             this.lblInputPath.Name = "lblInputPath";
-            this.lblInputPath.Size = new System.Drawing.Size(259, 42);
+            this.lblInputPath.Size = new System.Drawing.Size(409, 49);
             this.lblInputPath.TabIndex = 6;
-            this.lblInputPath.Text = "label1";
             // 
             // chkPlayOnSelect
             // 
             this.chkPlayOnSelect.AutoSize = true;
-            this.chkPlayOnSelect.Location = new System.Drawing.Point(13, 74);
+            this.chkPlayOnSelect.Location = new System.Drawing.Point(282, 126);
             this.chkPlayOnSelect.Name = "chkPlayOnSelect";
             this.chkPlayOnSelect.Size = new System.Drawing.Size(145, 17);
             this.chkPlayOnSelect.TabIndex = 7;
@@ -115,7 +117,7 @@
             // 
             // btnPlay
             // 
-            this.btnPlay.Location = new System.Drawing.Point(279, 126);
+            this.btnPlay.Location = new System.Drawing.Point(282, 178);
             this.btnPlay.Name = "btnPlay";
             this.btnPlay.Size = new System.Drawing.Size(68, 23);
             this.btnPlay.TabIndex = 8;
@@ -125,7 +127,7 @@
             // 
             // btnPanic
             // 
-            this.btnPanic.Location = new System.Drawing.Point(353, 126);
+            this.btnPanic.Location = new System.Drawing.Point(356, 178);
             this.btnPanic.Name = "btnPanic";
             this.btnPanic.Size = new System.Drawing.Size(68, 23);
             this.btnPanic.TabIndex = 9;
@@ -133,11 +135,28 @@
             this.btnPanic.UseVisualStyleBackColor = true;
             this.btnPanic.Click += new System.EventHandler(this.btnPanic_Click);
             // 
+            // pbrWaveProgress
+            // 
+            this.pbrWaveProgress.BackColor = System.Drawing.Color.White;
+            this.pbrWaveProgress.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.pbrWaveProgress.Location = new System.Drawing.Point(282, 149);
+            this.pbrWaveProgress.Name = "pbrWaveProgress";
+            this.pbrWaveProgress.Size = new System.Drawing.Size(142, 23);
+            this.pbrWaveProgress.TabIndex = 10;
+            this.pbrWaveProgress.Text = "dyWin7Progress1";
+            this.pbrWaveProgress.Value = 0;
+            // 
+            // tmrUpdatePlayback
+            // 
+            this.tmrUpdatePlayback.Interval = 16;
+            this.tmrUpdatePlayback.Tick += new System.EventHandler(this.tmrUpdatePlayback_Tick);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(434, 413);
+            this.ClientSize = new System.Drawing.Size(438, 381);
+            this.Controls.Add(this.pbrWaveProgress);
             this.Controls.Add(this.btnPanic);
             this.Controls.Add(this.btnPlay);
             this.Controls.Add(this.chkPlayOnSelect);
@@ -147,6 +166,7 @@
             this.Controls.Add(this.pbrMicValue);
             this.Controls.Add(this.btnRecord);
             this.Controls.Add(this.cboMicDevice);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmMain";
             this.Text = "Audio Replacer";
             this.Load += new System.EventHandler(this.frmMain_Load);
@@ -167,6 +187,8 @@
         private System.Windows.Forms.CheckBox chkPlayOnSelect;
         private System.Windows.Forms.Button btnPlay;
         private System.Windows.Forms.Button btnPanic;
+        private wclDigaly.dyWin7Progress pbrWaveProgress;
+        private System.Windows.Forms.Timer tmrUpdatePlayback;
     }
 }
 

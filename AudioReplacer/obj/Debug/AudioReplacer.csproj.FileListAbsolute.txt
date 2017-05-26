@@ -11,7 +11,4 @@ c:\users\tom dobbelaere\documents\visual studio 2015\Projects\AudioReplacer\Audi
 c:\users\tom dobbelaere\documents\visual studio 2015\Projects\AudioReplacer\AudioReplacer\obj\Debug\AudioReplacer.pdb
 c:\users\tom dobbelaere\documents\visual studio 2015\Projects\AudioReplacer\AudioReplacer\bin\Debug\wclDigaly.dll
 c:\users\tom dobbelaere\documents\visual studio 2015\Projects\AudioReplacer\AudioReplacer\bin\Debug\Microsoft.WindowsAPICodePack.dll
-c:\users\tom dobbelaere\documents\visual studio 2015\Projects\AudioReplacer\AudioReplacer\bin\Debug\Microsoft.WindowsAPICodePack.ExtendedLinguisticServices.dll
-c:\users\tom dobbelaere\documents\visual studio 2015\Projects\AudioReplacer\AudioReplacer\bin\Debug\Microsoft.WindowsAPICodePack.Sensors.dll
 c:\users\tom dobbelaere\documents\visual studio 2015\Projects\AudioReplacer\AudioReplacer\bin\Debug\Microsoft.WindowsAPICodePack.Shell.dll
-c:\users\tom dobbelaere\documents\visual studio 2015\Projects\AudioReplacer\AudioReplacer\bin\Debug\Microsoft.WindowsAPICodePack.ShellExtensions.dll

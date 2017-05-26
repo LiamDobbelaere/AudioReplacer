@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using NAudio.CoreAudioApi;
 using NAudio.Wave;
@@ -88,33 +83,37 @@ namespace AudioReplacer
 
         private void btnRecord_Click(object sender, EventArgs e)
         {
-            recording = !recording;
-
             if (recording)
-            {
-                if (playback != null) playback.Dispose();
-                if (wfr != null) wfr.Dispose();
-
-                btnRecord.BackColor = Color.Red;
-                btnRecord.ForeColor = Color.White;
-
-                waveSource = new WaveIn();
-                waveSource.DeviceNumber = ((MicDeviceWrapper)cboMicDevice.SelectedItem).Number;
-                waveSource.WaveFormat = new WaveFormat(44100, 1);
-
-                waveSource.DataAvailable += new EventHandler<WaveInEventArgs>(waveSource_DataAvailable);
-                waveSource.RecordingStopped += new EventHandler<StoppedEventArgs>(waveSource_RecordingStopped);
-                    
-                waveFile = new WaveFileWriter(Path.Combine(lblInputPath.Text, lstInputfiles.SelectedItem.ToString()), waveSource.WaveFormat);
-
-                waveSource.StartRecording();
-            }
-            else
             {
                 btnRecord.BackColor = Color.White;
                 btnRecord.ForeColor = Color.Black;
 
                 waveSource.StopRecording();
+
+                recording = false;
+            }
+            else
+            {
+                stopSounds();
+
+                if (lstInputfiles.SelectedItem != null)
+                {
+                    btnRecord.BackColor = Color.Red;
+                    btnRecord.ForeColor = Color.White;
+
+                    waveSource = new WaveIn();
+                    waveSource.DeviceNumber = ((MicDeviceWrapper)cboMicDevice.SelectedItem).Number;
+                    waveSource.WaveFormat = new WaveFormat(44100, 1);
+
+                    waveSource.DataAvailable += new EventHandler<WaveInEventArgs>(waveSource_DataAvailable);
+                    waveSource.RecordingStopped += new EventHandler<StoppedEventArgs>(waveSource_RecordingStopped);
+
+                    waveFile = new WaveFileWriter(Path.Combine(lblInputPath.Text, lstInputfiles.SelectedItem.ToString()), waveSource.WaveFormat);
+
+                    waveSource.StartRecording();
+
+                    recording = true;
+                }
             }
         }
 
@@ -156,6 +155,8 @@ namespace AudioReplacer
             wfr = new WaveFileReader(Path.Combine(lblInputPath.Text, lstInputfiles.SelectedItem.ToString()));
             playback.Init(wfr);
             playback.Play();
+
+            tmrUpdatePlayback.Start();
         }
 
         private void lstInputfiles_SelectedIndexChanged(object sender, EventArgs e)
@@ -170,8 +171,29 @@ namespace AudioReplacer
 
         private void btnPanic_Click(object sender, EventArgs e)
         {
+            stopSounds();
+        }
+
+        private void stopSounds()
+        {
+            tmrUpdatePlayback.Stop();
+
             if (playback != null) playback.Dispose();
             if (wfr != null) wfr.Dispose();
+        }
+
+        private void tmrUpdatePlayback_Tick(object sender, EventArgs e)
+        {
+            if (wfr != null)
+            {
+                int targetValue = (int)(Math.Round(wfr.CurrentTime.TotalMilliseconds / wfr.TotalTime.TotalMilliseconds * 100));
+
+                if (targetValue > 80) pbrWaveProgress.ForeColor = Color.Red;
+                else if (targetValue > 50) pbrWaveProgress.ForeColor = Color.Orange;
+                else pbrWaveProgress.ForeColor = Color.Green;
+
+                pbrWaveProgress.Value = targetValue;
+            }
         }
     }
 }
